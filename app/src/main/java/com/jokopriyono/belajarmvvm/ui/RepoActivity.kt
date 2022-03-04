@@ -4,10 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import com.jokopriyono.belajarmvvm.MyViewModelFactory
 import com.jokopriyono.belajarmvvm.data.MainRepository
 import com.jokopriyono.belajarmvvm.databinding.ActivityRepoBinding
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class RepoActivity : AppCompatActivity(), RepoView {
 
@@ -17,15 +18,18 @@ class RepoActivity : AppCompatActivity(), RepoView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityRepoBinding.inflate(layoutInflater)
+        val factory = MyViewModelFactory(MainRepository(this))
+        viewModel = ViewModelProvider(this, factory).get(RepoViewModel::class.java)
+            .apply { view = this@RepoActivity }
+
+        binding = ActivityRepoBinding.inflate(layoutInflater).apply {
+            lifecycleOwner = this@RepoActivity
+            vm = viewModel
+        }
         setContentView(binding.root)
 
-        viewModel = RepoViewModel(MainRepository(this), this)
-        binding.lifecycleOwner = this
-        binding.vm = viewModel
-
         binding.btnGetLoad.setOnClickListener {
-            GlobalScope.launch {
+            CoroutineScope(Dispatchers.IO).launch {
                 viewModel.fetchAndLoadCharacters()
             }
         }

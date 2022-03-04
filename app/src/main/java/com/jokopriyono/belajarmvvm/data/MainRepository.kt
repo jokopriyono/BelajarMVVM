@@ -1,13 +1,14 @@
 package com.jokopriyono.belajarmvvm.data
 
 import android.content.Context
-import com.jokopriyono.belajarmvvm.data.remote.ApiClient
 import com.jokopriyono.belajarmvvm.data.local.MyDatabase
 import com.jokopriyono.belajarmvvm.data.model.Character
 import com.jokopriyono.belajarmvvm.data.model.CharacterData
 import com.jokopriyono.belajarmvvm.data.model.CharactersResponse
+import com.jokopriyono.belajarmvvm.data.remote.ApiClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.withContext
 
 class MainRepository(context: Context) {

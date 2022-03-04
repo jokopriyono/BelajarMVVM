@@ -7,7 +7,6 @@ import retrofit2.http.GET
 interface ApiService {
 
     @GET("characters")
-//    fun getAllDisneyCharacters(): Call<CharactersResponse>
     suspend fun getAllDisneyCharacters(): Response<CharactersResponse>
 
 }

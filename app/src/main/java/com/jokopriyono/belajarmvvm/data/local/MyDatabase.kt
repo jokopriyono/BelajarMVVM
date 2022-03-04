@@ -20,7 +20,7 @@ abstract class MyDatabase : RoomDatabase() {
                     database = Room.databaseBuilder(
                         context.applicationContext,
                         MyDatabase::class.java,
-                        "cats.db"
+                        "my_database.db"
                     ).build()
                 }
             }
